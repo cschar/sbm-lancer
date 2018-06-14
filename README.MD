@@ -4,6 +4,8 @@ blender myscene.blend --background --python myscript.py
 
 https://discussion.developer.riotgames.com/questions/2982/how-to-find-all-highest-ranked-players.html
 
+http://orianna.readthedocs.io/en/latest/using-orianna/type-api.html#league-api
+
 add scene.blend
 
 

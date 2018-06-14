@@ -15,7 +15,16 @@ public class SumBlip {
     private long id;
 
     private String name;
-    private String leaguePoints;
+    private int leaguePoints;
+
+    public SumBlip(){
+
+    }
+
+    public SumBlip(String name, int lp) {
+        this.name = name;
+        this.leaguePoints = lp;
+    }
 
     public String getName() {
         return name;
@@ -25,11 +34,11 @@ public class SumBlip {
         this.name = name;
     }
 
-    public String getLeaguePoints() {
+    public int getLeaguePoints() {
         return leaguePoints;
     }
 
-    public void setLeaguePoints(String leaguePoints) {
+    public void setLeaguePoints(int leaguePoints) {
         this.leaguePoints = leaguePoints;
     }
 }
