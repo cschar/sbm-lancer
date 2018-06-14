@@ -13,7 +13,8 @@ argv = argv[argv.index("--") + 1:]  # get all args after "--"
 print("received args to script:")
 print(argv)  # --> ['example', 'args', '123']
 start = argv[0]
-end = argv[1]
+filepath = argv[1]
+
 
 
 try:
@@ -101,18 +102,11 @@ for scene in bpy.data.scenes:
     
     # -f command deals with this
     scene.frame_start = int(start)
-    scene.frame_end = int(end)
+    scene.frame_end = int(start)
 
-    try:
-    	name = bpy.path.basename(bpy.context.blend_data.filepath).split('.blend')[0]
-    except Exception:
-    	name = 'foo'
-    	print("Couldnt find filepath name")
-
-    print("rendering to %s" % name)
     # scene.render.filepath = "/var/tmp/renders/"+name+"/"
-    scene.render.filepath = "./renders/"+name+"/"
+    scene.render.filepath = filepath
+    print("rendering to" + filepath)
 
 
-
-bpy.ops.render.render(animation=True)
+bpy.ops.render.render(write_still=True)

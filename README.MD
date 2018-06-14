@@ -1,13 +1,22 @@
+# README
 
+java spring boot render service
 
-blender myscene.blend --background --python myscript.py
+## Setup
 
-https://discussion.developer.riotgames.com/questions/2982/how-to-find-all-highest-ranked-players.html
+sudo -u postgres createuser <username>
+sudo -u postgres createdb <dbname>
+sudo -u postgres psql
+psql=# alter user <username> with encrypted password '<password>';
+grant all privileges on database <dbname> to <username> ;
 
-http://orianna.readthedocs.io/en/latest/using-orianna/type-api.html#league-api
+after set env for jar to pick up:
 
-add scene.blend
+export SBMLANCER_DB_NAME=sbmlancer_db
+export SBMLANCER_DB_USERNAME=sbmlancer
+export SBMLANCER_DB_PASSWORD=sbmlancer-password
 
+export ALLOWED_CORS=<UI hostname>
 
 install pycurl macosx
 

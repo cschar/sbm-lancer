@@ -2,7 +2,11 @@
 package com.oceanboa.dnc.summoner2service;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
         import java.util.stream.Collectors;
@@ -12,13 +16,52 @@ import com.merakianalytics.orianna.types.common.Platform;
 import com.merakianalytics.orianna.types.common.Queue;
 import com.merakianalytics.orianna.types.common.Region;
 import com.merakianalytics.orianna.types.core.league.*;
-import com.merakianalytics.orianna.types.core.summoner.Summoner;
-import com.merakianalytics.orianna.types.core.summoner.Summoners;
-
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class OriTest {
 
     public OriTest(){};
+
+
+    public static void main(String[] args) {
+
+//        OriTest.crawlOP();
+//        OriTest.runRender();
+          OriTest.runCommand("blender scene.blend --background --python blender_script_no_output.py -- 1 renders/scene/myimage.jpg");
+    }
+
+    public static void crawlOP(){
+
+        try {
+            String url = "http://na.op.gg/ranking/ladder/";
+
+            Document document = Jsoup.connect(url).get();
+//            System.out.println(document.html());
+
+            Elements linksOnPage = document.select(".ranking-highest__name");
+
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmm").format(Calendar.getInstance().getTime());
+
+            BufferedWriter writer = new BufferedWriter(new FileWriter("crawls/challenger-" + timeStamp+".txt"));
+
+            for (Element el : linksOnPage) {
+                writer.write(el.html() + "\n");
+
+                System.out.println(el.html());
+               //System.out.println(el.attr("innerHTML"));
+            }
+
+            writer.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
 
     public static List<String> getTopSums(){
         Orianna.Configuration config = new Orianna.Configuration();
@@ -80,14 +123,15 @@ public class OriTest {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
 
+    public static void runRender(){
         Runtime r = Runtime.getRuntime();
         Process p = null;
         StringBuffer sb = new StringBuffer();
 
         try {
-            p = r.exec("blender scene.blend --background --python blender_script.py -- 7 7 hey ho hey");
+//            p = r.exec("blender scene.blend --background --python blender_script.py -- 7 7 hey ho hey");
+            p = r.exec("blender scene.blend --background --python blender_script.py -- 7 7");
             p.waitFor();
             BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
             String line = "";
@@ -103,7 +147,6 @@ public class OriTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
     }
