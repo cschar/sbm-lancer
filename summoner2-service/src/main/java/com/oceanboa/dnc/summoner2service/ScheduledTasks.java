@@ -38,14 +38,15 @@ public class ScheduledTasks {
     private Environment env;
 
 
-    @Scheduled(cron="0 0 * * * *" ) // every hour
+//    @Scheduled(cron="0 0 * * * *" ) // every hour
+    @Scheduled(cron="0 0 11 * * ?" ) // at 11 everyday
     public void crawl() {
         OriTest.crawlOP();
         log.info("Crawled out op at time {}", dateFormat.format(new Date()));
     }
 
 //    @Scheduled(cron="0 * * * * *" )
-    @Scheduled(fixedRate = 5 * 1000)
+    @Scheduled(fixedRate = 5 * 60 * 1000)
     public void heartbeat() {
         log.info("heartbeat at time {}", dateFormat.format(new Date()));
 
@@ -53,8 +54,9 @@ public class ScheduledTasks {
         log.info(allowedCors);
     }
 
-    @Scheduled(fixedRate = 5 * 60 * 1000) // every 5 minute
+//    @Scheduled(fixedRate = 5 * 60 * 1000) // every 5 minute
 //    @Scheduled(cron="0 0 * * * *" ) // every hour
+    @Scheduled(cron="0 0 12 * * ?" ) // at Noon everyday
     public void render(){
 
         ScheduledTasks.counter +=1 ;

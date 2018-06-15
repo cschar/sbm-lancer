@@ -37,21 +37,15 @@ public class OriTest {
 
         try {
             String url = "http://na.op.gg/ranking/ladder/";
-
             Document document = Jsoup.connect(url).get();
-//            System.out.println(document.html());
-
             Elements linksOnPage = document.select(".ranking-highest__name");
 
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmm").format(Calendar.getInstance().getTime());
-
             BufferedWriter writer = new BufferedWriter(new FileWriter("crawls/challenger-" + timeStamp+".txt"));
 
             for (Element el : linksOnPage) {
                 writer.write(el.html() + "\n");
-
                 System.out.println(el.html());
-               //System.out.println(el.attr("innerHTML"));
             }
 
             writer.close();
