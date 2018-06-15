@@ -48,7 +48,7 @@ public class Summoner2ServiceApplication {
             OriTest.crawlOP();
 
 			repoBlip.save(new SumBlip("zee", 199));
-			repository.save(new SumLog(dateFormat.format(new Date()), "renders/scene/0001.jpg"));
+//			repository.save(new SumLog(dateFormat.format(new Date()), "renders/scene/0001.jpg"));
 
 		};
 	}
