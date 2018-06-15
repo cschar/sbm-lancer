@@ -4,28 +4,40 @@ java spring boot render service
 
 ## Setup
 
+```
 sudo -u postgres createuser <username>
 sudo -u postgres createdb <dbname>
 sudo -u postgres psql
 psql=# alter user <username> with encrypted password '<password>';
 grant all privileges on database <dbname> to <username> ;
 
-after set env for jar to pick up:
 
+after set env for jar to pick up:
 export SBMLANCER_DB_NAME=sbmlancer_db
 export SBMLANCER_DB_USERNAME=sbmlancer
 export SBMLANCER_DB_PASSWORD=sbmlancer-password
-
 export ALLOWED_CORS=<UI hostname>
 
-install pycurl macosx
-
-virtualenv env
-source env/bin/activate
-brew install openssl
-export LDFLAGS=-L/usr/local/opt/openssl/lib
-export CPPFLAGS=-I/usr/local/opt/openssl/include
-export PYCURL_SSL_LIBRARY=openssl
-pip install --install-option="--with-openssl" --install-option="--openssl-dir=/usr/local/opt/openssl" pycurl
+mvn package
+java -jar target/<name>
+```
 
 
+## example systemd unit file
+```
+[Unit]
+Description=SBM lancer java service
+Requires=postgresql.service      
+After=postgresql.service
+
+[Service]
+WorkingDirectory=/var/www/sbm-lancer/summoner2-service
+ExecStart=/usr/bin/java -jar target/summoner2-service-0.0.1-SNAPSHOT.jar
+Environment=SBMLANCER_DB_USERNAME=sbmlancer SBMLANCER_DB_NAME=sbmlancer_db SBMLANCER_DB_PASSWORD=sbmlancer-password ALLOWED_CORS=http://example.com
+
+Restart=always
+
+
+[Install]
+WantedBy=multi-user.target
+```
