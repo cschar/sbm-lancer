@@ -34,6 +34,9 @@ public class Summoner2ServiceApplication {
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY:MM:DD:HH:mm:ss");
 
     @Autowired
+    SumLogRepository sumLogRepo;
+
+    @Autowired
     private Environment env;
 
 
@@ -46,6 +49,11 @@ public class Summoner2ServiceApplication {
 		return (args) -> {
 
             OriTest.crawlOP();
+            String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
+            String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 %s", filepath);
+            String name = OriTest.runCommand(cmd);
+            sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", 0, dateFormat.format(new Date())), filepath));
+
 
 			repoBlip.save(new SumBlip("zee", 199));
 //			repository.save(new SumLog(dateFormat.format(new Date()), "renders/scene/0001.jpg"));

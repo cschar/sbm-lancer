@@ -28,9 +28,9 @@ public class OriTest {
 
     public static void main(String[] args) {
 
-//        OriTest.crawlOP();
+        // OriTest.crawlOP();
 //        OriTest.runRender();
-          OriTest.runCommand("blender scene.blend --background --python blender_script_no_output.py -- 1 renders/scene/myimage.jpg");
+          OriTest.runCommand("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 renders/scene/myimage2.jpg");
     }
 
     public static void crawlOP(){
@@ -119,29 +119,6 @@ public class OriTest {
 
 
     public static void runRender(){
-        Runtime r = Runtime.getRuntime();
-        Process p = null;
-        StringBuffer sb = new StringBuffer();
-
-        try {
-//            p = r.exec("blender scene.blend --background --python blender_script.py -- 7 7 hey ho hey");
-            p = r.exec("blender scene.blend --background --python blender_script.py -- 7 7");
-            p.waitFor();
-            BufferedReader b = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            String line = "";
-
-
-            while ((line = b.readLine()) != null) {
-                System.out.println(line);
-                sb.append(line);
-            }
-
-            b.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
+        
     }
 }

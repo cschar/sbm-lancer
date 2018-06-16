@@ -1,6 +1,7 @@
 /target/
 crawls
 renders
+__pycache__
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

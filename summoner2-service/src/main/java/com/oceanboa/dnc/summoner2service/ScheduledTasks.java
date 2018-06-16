@@ -38,8 +38,8 @@ public class ScheduledTasks {
     private Environment env;
 
 
-//    @Scheduled(cron="0 0 * * * *" ) // every hour
-    @Scheduled(cron="0 0 11 * * ?" ) // at 11 everyday
+   @Scheduled(cron="0 0 * * * *" ) // every hour
+    // @Scheduled(cron="0 0 11 * * ?" ) // at 11 everyday
     public void crawl() {
         OriTest.crawlOP();
         log.info("Crawled out op at time {}", dateFormat.format(new Date()));
@@ -55,21 +55,16 @@ public class ScheduledTasks {
     }
 
 //    @Scheduled(fixedRate = 5 * 60 * 1000) // every 5 minute
-//    @Scheduled(cron="0 0 * * * *" ) // every hour
-    @Scheduled(cron="0 0 12 * * ?" ) // at Noon everyday
+   @Scheduled(cron="0 0 * * * *" ) // every hour
+    // @Scheduled(cron="0 0 12 * * ?" ) // at Noon everyday
     public void render(){
 
         ScheduledTasks.counter +=1 ;
 
-//        String cmd = MessageFormat.format("blender scene.blend --background --python blender_script.py -- {0} {0}",
-////                DateTime.now().getHourOfDay()); //hour of day is frame
-//                ScheduledTasks.counter);
-
         String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
-        String cmd = String.format("blender scene.blend --background --python blender_script_no_output.py -- 1 %s", filepath);
+        String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 %s", filepath);
 
         String name = OriTest.runCommand(cmd);
-
         sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", ScheduledTasks.counter, dateFormat.format(new Date())), filepath));
 
         log.info("Rendered out frame at time {}", dateFormat.format(new Date()));

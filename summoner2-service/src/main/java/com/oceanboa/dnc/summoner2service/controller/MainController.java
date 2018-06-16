@@ -37,8 +37,6 @@ public class MainController {
     public String sumlogs(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
 
 
-        sumLogRepo.save(new SumLog("test", "renders/scene/0001.jpg"));
-
         List<SumLog> sumlogs = StreamSupport
                 .stream(sumLogRepo.findAll().spliterator(), false)
                 .limit(10)
@@ -53,13 +51,6 @@ public class MainController {
 //    @GetMapping("/run")
     public String run(@RequestParam(name="name", required=false, defaultValue="World") String name,
                       @RequestParam(name="frame", required=false, defaultValue="1") String frame, Model model) {
-
-
-
-        name = OriTest.runCommand("blender scene.blend --background --python blender_script_no_output.py -- 1 renders/scene/myimage.jpg");
-//        name = MainController.runCommand("which blender");
-
-        sumLogRepo.save(new SumLog(name.substring(0,200), "renders/scene/0001.jpg"));
 
         model.addAttribute("name", name);
 
