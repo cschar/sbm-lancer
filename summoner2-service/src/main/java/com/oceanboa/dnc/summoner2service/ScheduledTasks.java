@@ -49,23 +49,28 @@ public class ScheduledTasks {
     }
 
 //    @Scheduled(fixedRate = 5 * 60 * 60 * 1000) // every 5 hours
-//   @Scheduled(cron="0 0 * * * *" ) // every hour
+   @Scheduled(cron="0 0 * * * *" ) // every hour
     // @Scheduled(cron="0 0 12 * * ?" ) // at Noon everyday
     public void render(){
 
         ScheduledTasks.counter +=1 ;
 
-//        String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
-//        String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_still.py -- 1 %s", filepath);
-
-        String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
-        String cmd = String.format("blender blend/scene3beziertext.blend --background --python blend/blender_script_still_2.py -- 1 %s", filepath);
+    String cmd = "";
+    String filepath = "";
+    if(ScheduledTasks.counter % 2 == 0) {
+        filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
+        cmd = String.format("blender blend/scene3beziertext.blend --background --python blend/blender_script_still_2.py -- 1 %s", filepath);
+    }else{
+        filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
+        cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_still.py -- 1 %s", filepath);
+    }
 
 //        String filepath = String.format("renders/scene3/%s/", dateFormat.format(new Date()));
 //        String cmd = String.format("blender blend/scene3beziertext.blend --background --python blend/blender_script_anim.py -- 1 30 %s", filepath);
 
         String name = OriTest.runCommand(cmd);
-        renderLogRepo.save(new RenderLog(String.format("renderlog %d - %s", ScheduledTasks.counter, dateFormat.format(new Date())), filepath));
+        renderLogRepo.save(new RenderLog(String.format("renderlog %d - %s", ScheduledTasks.counter, dateFormat.format(new Date())),
+                           filepath));
 
         log.info("Rendered out frame at time {}", dateFormat.format(new Date()));
     }
