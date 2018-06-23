@@ -7,7 +7,7 @@ import javax.persistence.Id;
 
 
 @Entity
-public class SumLog {
+public class RenderLog {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -42,15 +42,15 @@ public class SumLog {
 
     private String lastName;
 
-    protected SumLog() {}
+    protected RenderLog() {}
 
-    public SumLog(String firstName, String lastName, String animType) {
+    public RenderLog(String firstName, String lastName, String animType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.animType = animType;
     }
 
-    public SumLog(String firstName, String lastName) {
+    public RenderLog(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
