@@ -51,8 +51,12 @@ public class Summoner2ServiceApplication {
             OriTest.crawlOP();
             String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
             String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 %s", filepath);
+//            String filepath = String.format("renders/scene3/%s/", dateFormat.format(new Date()));
+//            String cmd = String.format("blender blend/scene3-bezier-text.blend --background --python blend/blender_script_anim.py -- 1 2 %s", filepath);
+
             String name = OriTest.runCommand(cmd);
-            sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", 0, dateFormat.format(new Date())), filepath));
+            sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", 0, dateFormat.format(new Date())), filepath, "anim"));
+            sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", 0, dateFormat.format(new Date())), filepath, "anim"));
 
 
 			repoBlip.save(new SumBlip("zee", 199));

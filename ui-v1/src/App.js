@@ -24,7 +24,7 @@ class Pager extends Component {
           return ( <div key={"pageDiv"+x}>
             <button className="btn btn-outline-secondary"
              onClick={() =>
-               this.props.callBack(SERVER_NAME+"/sumLogs?size="+PAGE_SIZE+"&page="+x)} > {x} </button>
+               this.props.callBack(SERVER_NAME+"/sumLogs/search/reverse?size="+PAGE_SIZE+"&page="+x)} > {x} </button>
             </div>
            )
         })}
@@ -69,7 +69,7 @@ class App extends Component {
   getSumLogs(pageUrl){
     this.setState({loading: true});
     
-    let url = SERVER_NAME+"/sumLogs?size="+PAGE_SIZE;
+    let url = SERVER_NAME+"/sumLogs/search/reverse?size="+PAGE_SIZE;
     if(pageUrl !== undefined){
       url = pageUrl;
     }
@@ -138,7 +138,7 @@ class App extends Component {
         {/* <button className="btn btn-outline-primary" onClick={this.getSumLogs} >
           Get Images
         </button> */}
-
+       
         {this.state.pageData !== null ?
           <Pager totalPages={this.state.pageData.totalPages}
                  callBack={this.getSumLogs}

@@ -12,6 +12,16 @@ public class SumLog {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+
+    public String getAnimType() {
+        return animType;
+    }
+
+    public void setAnimType(String animType) {
+        this.animType = animType;
+    }
+
+    private String animType;
     private String firstName;
 
     public String getFirstName() {
@@ -34,16 +44,22 @@ public class SumLog {
 
     protected SumLog() {}
 
+    public SumLog(String firstName, String lastName, String animType) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.animType = animType;
+    }
+
     public SumLog(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return String.format(
-                "Customer[id=%d, firstName='%s', lastName='%s']",
-                id, firstName, lastName);
-    }
+//    @Override
+//    public String toString() {
+//        return String.format(
+//                "Customer[id=%d, firstName='%s', lastName='%s']",
+//                id, firstName, lastName);
+//    }
 
 }

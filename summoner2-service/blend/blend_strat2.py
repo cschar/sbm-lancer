@@ -1,5 +1,5 @@
-#blender --background --python myscript.py
-#blender myscene.blend --background --python myscript.py
+
+#blender scene3-bezier-text.blend --background --python script.py
 
 import bpy
 import sys
@@ -13,7 +13,7 @@ import math
 
 def run(names=None):
     if not names:
-        names = ["hey hello hi ", "hola hola hola "]
+        names = ["hey hello hi ", "hola hola hola ", "palyer2323", "palyeer324234", "KDA FOR KDA"]
 
     print("Creating text")
 
@@ -47,8 +47,24 @@ def run(names=None):
             ob.select = True
             bpy.context.scene.objects.active = ob
 
-            
+                
+            bpy.ops.object.modifier_add(type='CURVE')
+            bpy.context.object.modifiers["Curve"].object = bpy.data.objects["BezierCurve"+str(name_indx)]
 
+            bpy.ops.transform.rotate(value=1.535, axis=(0, 1, 0), constraint_axis=(False, True, False), constraint_orientation='GLOBAL', mirror=False, proportional='DISABLED', proportional_edit_falloff='SMOOTH', proportional_size=1)
+            bpy.ops.object.location_clear(clear_delta=False)
+
+            bpy.context.scene.frame_current = 1
+            # bpy.ops.anim.keyframe_insert_menu(type='Location')
+            ob.keyframe_insert(data_path='location', index=1, frame=1)
+            bpy.context.scene.frame_current = 30
+            bpy.ops.transform.translate(value=(0, -13.2986, 0), constraint_axis=(False, True, False), constraint_orientation='GLOBAL', mirror=False, proportional='DISABLED', proportional_edit_falloff='SMOOTH', proportional_size=1)
+            # bpy.ops.anim.keyframe_insert_menu(type='Location')
+            #ob.location.y = -13
+            ob.keyframe_insert(data_path='location', index=1, frame=30)
+            bpy.context.scene.frame_current = 1
+
+            
             # bpy.ops.object.constraint_add(type='FOLLOW_PATH')
             # ob.constraints["Follow Path"].target = bpy.data.objects["BezierCircle.001"]
             # ob.constraints["Follow Path"].offset = random.random() * 100
@@ -58,6 +74,7 @@ def run(names=None):
             ob.data.extrude = 0.142
             ob.data.size = 1.54
             ob.data.body = names[name_indx]
+            
             print("name_indx: " + str(name_indx) +"\n\n")
             name_indx += 1
 

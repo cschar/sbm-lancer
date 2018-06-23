@@ -54,15 +54,17 @@ public class ScheduledTasks {
         log.info(allowedCors);
     }
 
-//    @Scheduled(fixedRate = 5 * 60 * 1000) // every 5 minute
-   @Scheduled(cron="0 0 * * * *" ) // every hour
+//    @Scheduled(fixedRate = 5 * 60 * 60 * 1000) // every 5 hours
+//   @Scheduled(cron="0 0 * * * *" ) // every hour
     // @Scheduled(cron="0 0 12 * * ?" ) // at Noon everyday
     public void render(){
 
         ScheduledTasks.counter +=1 ;
 
-        String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
-        String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 %s", filepath);
+//        String filepath = String.format("renders/scene/image-%s.jpg", dateFormat.format(new Date()));
+//        String cmd = String.format("blender blend/scene.blend --background --python blend/blender_script_no_output.py -- 1 %s", filepath);
+        String filepath = String.format("renders/scene3/%s/", dateFormat.format(new Date()));
+        String cmd = String.format("blender blend/scene3-bezier-text.blend --background --python blend/blender_script_anim.py -- 1 30 %s", filepath);
 
         String name = OriTest.runCommand(cmd);
         sumLogRepo.save(new SumLog(String.format("sumlog %d - %s", ScheduledTasks.counter, dateFormat.format(new Date())), filepath));

@@ -1,5 +1,5 @@
-#blender --background --python myscript.py
-#blender scene.blend --background --python myscript.py -- 4 file_render_path
+
+#blender scene3-bezier-text.blend --background --python blender_script_anim.py -- 1 30 bob alice 
 
 import os
 import bpy
@@ -19,7 +19,8 @@ argv = argv[argv.index("--") + 1:]  # get all args after "--"
 print("received args to script:")
 print(argv)  # --> ['example', 'args', '123']
 start = argv[0]
-filepath = argv[1]
+end = argv[1]
+filepath = argv[2]
 
 
 try:
@@ -28,8 +29,8 @@ try:
 except Exception:
 	print("failed to clear render bordr")
 
-if len(argv) > 3:
-    names = argv[2:]
+if len(argv) > 4:
+    names = argv[3:]
 else:
     print("no names given in commandline, reading file...")
     challenger_file = sorted(glob.glob("crawls/challenger-*.txt"))[-1]
@@ -42,23 +43,13 @@ else:
     print("read in file {}, got names {}".format(challenger_file, names))
 
 
-# file_dir = os.path.dirname(__file__)
-# sys.path.append(file_dir)
-
-
-
-
-
-
-
-
 
 dir = os.path.dirname(bpy.data.filepath)
 if not dir in sys.path:
     sys.path.append(dir )
-# import .strats.blend_strat1
+
 from blend_strat2 import run
-# blend_strat1.run()
+
 run(names=names)
 
 
@@ -71,12 +62,11 @@ for scene in bpy.data.scenes:
     
     # -f command deals with this
     scene.frame_start = int(start)
-    scene.frame_end = int(start)+1
+    scene.frame_end = int(end)
 
-    # scene.render.filepath = "/var/tmp/renders/"+name+"/"
+    # scene.render.filepath = "/var/tmp/renders/test/"
     scene.render.filepath = filepath
     print("rendering to" + filepath)
 
 
-bpy.ops.render.render(write_still=True)
-# bpy.ops.render.render()
+bpy.ops.render.render(animation=True)
