@@ -24,7 +24,7 @@ class Pager extends Component {
           return ( <div key={"pageDiv"+x}>
             <button className="btn btn-outline-secondary"
              onClick={() =>
-               this.props.callBack(SERVER_NAME+"/sumLogs/search/reverse?size="+PAGE_SIZE+"&page="+x)} > {x} </button>
+               this.props.callBack(SERVER_NAME+"/renderLogs/search/reverse?size="+PAGE_SIZE+"&page="+x)} > {x} </button>
             </div>
            )
         })}
@@ -46,7 +46,7 @@ class App extends Component {
       loading: false
     }
 
-    this.getSumLogs = this.getSumLogs.bind(this);
+    this.getLogs = this.getLogs.bind(this);
 
   
   }
@@ -63,13 +63,13 @@ class App extends Component {
 
 
   componentDidMount(){
-    this.getSumLogs();
+    this.getLogs();
   }
 
-  getSumLogs(pageUrl){
+  getLogs(pageUrl){
     this.setState({loading: true});
     
-    let url = SERVER_NAME+"/sumLogs/search/reverse?size="+PAGE_SIZE;
+    let url = SERVER_NAME+"/renderLogs/search/reverse?size="+PAGE_SIZE;
     if(pageUrl !== undefined){
       url = pageUrl;
     }
@@ -93,7 +93,7 @@ class App extends Component {
 
         this.setState({
           pageData: data.page,
-          data: data._embedded.sumLogs,
+          data: data._embedded.renderLogs,
           loading: false})
       }.bind(this))
 
@@ -113,7 +113,8 @@ class App extends Component {
         
     <div className="row">
     <div className="col-9">
-        {this.state.data.map( function(x, idx){
+
+        {this.state.data != null ? this.state.data.map( function(x, idx){
           
           return (
             <div key={"imagediv"+x.lastName}>
@@ -123,7 +124,10 @@ class App extends Component {
                 src={SERVER_NAME+"/files/"+x.lastName.substr("renders".length)} />
               </div>
           )
-        })}
+        }) :
+         <div> no data </div>
+         }
+         
     </div>
       <div className="col-3 bg-light">
         <div className="loaderHolderBig">
@@ -135,13 +139,10 @@ class App extends Component {
         </div>
 
 
-        {/* <button className="btn btn-outline-primary" onClick={this.getSumLogs} >
-          Get Images
-        </button> */}
-       
+      
         {this.state.pageData !== null ?
           <Pager totalPages={this.state.pageData.totalPages}
-                 callBack={this.getSumLogs}
+                 callBack={this.getLogs}
                   />
       :
       (<div>no page </div>)}
